@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Chat Analyzer Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fab fa-whatsapp"></i>
+                <span>Chat Analyzer Pro</span>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="export-btn" id="exportBtn" style="display: none;">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 class="hero-title">
+                <span class="gradient-text">Analyze Your</span>
+                <span class="typing-text">WhatsApp Chats</span>
+            </h1>
+            <p class="hero-subtitle">Get powerful insights from your conversations with AI-powered analytics</p>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <div class="upload-box">
+                <input type="file" id="fileInput" accept=".txt" hidden>
+                <label for="fileInput" class="upload-label">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Drop your chat file here</h3>
+                    <p>or click to browse</p>
+                    <span class="file-info">Supports .txt files (WhatsApp export)</span>
+                </label>
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <span class="progress-text">Analyzing...</span>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Advanced Analytics</h4>
+                    <p>Deep insights into chat patterns</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h4>AI Insights</h4>
+                    <p>Smart sentiment analysis</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>100% Private</h4>
+                    <p>All processing in browser</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Lightning Fast</h4>
+                    <p>Instant results</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="results hidden">
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card pulse">
+                    <div class="stat-icon messages">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalMessages">0</div>
+                        <div class="stat-label">Messages</div>
+                    </div>
+                </div>
+                <div class="stat-card pulse">
+                    <div class="stat-icon users">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Participants</div>
+                    </div>
+                </div>
+                <div class="stat-card pulse">
+                    <div class="stat-icon media">
+                        <i class="fas fa-photo-video"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="mediaCount">0</div>
+                        <div class="stat-label">Media Files</div>
+                    </div>
+                </div>
+                <div class="stat-card pulse">
+                    <div class="stat-icon emojis">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="emojiCount">0</div>
+                        <div class="stat-label">Emojis</div>
+                    </div>
+                </div>
+                <div class="stat-card pulse">
+                    <div class="stat-icon links">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="linkCount">0</div>
+                        <div class="stat-label">Links</div>
+                    </div>
+                </div>
+                <div class="stat-card pulse">
+                    <div class="stat-icon words">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="wordCount">0</div>
+                        <div class="stat-label">Words</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Timeline -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2><i class="fas fa-clock"></i> Activity Timeline</h2>
+                    <div class="chart-controls">
+                        <button class="chart-btn active" data-chart="hourly">Hourly</button>
+                        <button class="chart-btn" data-chart="daily">Daily</button>
+                    </div>
+                </div>
+                <canvas id="activityChart"></canvas>
+            </div>
+
+            <!-- User Leaderboard -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2><i class="fas fa-trophy"></i> User Leaderboard</h2>
+                </div>
+                <div id="leaderboard"></div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2><i class="fas fa-chart-pie"></i> Message Distribution</h2>
+                    </div>
+                    <canvas id="pieChart"></canvas>
+                </div>
+
+                <div class="section-card">
+                    <h2><i class="fas fa-smile-beam"></i> Top Emojis</h2>
+                    <div id="emojiCloud"></div>
+                </div>
+            </div>
+
+            <!-- Word Cloud -->
+            <div class="section-card">
+                <h2><i class="fas fa-cloud"></i> Most Used Words</h2>
+                <div id="wordCloud"></div>
+            </div>
+
+            <!-- Detailed User Stats -->
+            <div class="section-card">
+                <h2><i class="fas fa-user-chart"></i> Detailed User Statistics</h2>
+                <div id="userStatsContainer"></div>
+            </div>
+
+            <!-- Chat Insights -->
+            <div class="section-card insights-card">
+                <h2><i class="fas fa-lightbulb"></i> AI Insights</h2>
+                <div id="insights"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+        <p>Analyzing your chat...</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
